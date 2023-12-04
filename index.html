@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+</head>
+<body>
+    <h1>Password Generator</h1>
+    <label for="passwordLength">Password Length:</label>
+    <input type="number" id="passwordLength" min="1" value="8">
+    <button onclick="generatePasswords()">Generate Passwords</button>
+
+    <h2>Generated Passwords:</h2>
+    <ul id="passwordList"></ul>
+
+    <script>
+        function generatePasswords() {
+            // Define the alphabet for password generation
+            const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+
+            // Get password length from user input
+            const passwordLength = document.getElementById("passwordLength").value;
+
+            // Check if the password length is valid
+            if (passwordLength < 1) {
+                alert("Password length should be at least 1");
+                return;
+            }
+
+            if (passwordLength > 10) {
+                alert("Password length should be less than 10");
+                return;
+            }
+
+            // Generate passwords
+            const passwordList = [];
+            for (let i = 0; i < 10; i++) {
+                const password = generatePassword(alphabet, passwordLength);
+                passwordList.push(password);
+            }
+
+            // Display generated passwords
+            displayPasswords(passwordList);
+        }
+
+        function generatePassword(alphabet, length) {
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * alphabet.length);
+                password += alphabet.charAt(randomIndex);
+            }
+            return password;
+        }
+
+        function displayPasswords(passwordList) {
+            const passwordListElement = document.getElementById("passwordList");
+            passwordListElement.innerHTML = '';
+
+            passwordList.forEach(password => {
+                const listItem = document.createElement("li");
+                listItem.textContent = password;
+                passwordListElement.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>
